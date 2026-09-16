@@ -11,8 +11,8 @@ const ATLAM_CONFIG = {
     location: "Aparecida de Goiânia – GO",
     city: "Aparecida de Goiânia",
     state: "GO",
-    whatsappNumber: "5562999999999", // Insira o número com DDD (ex: 5562999999999)
-    whatsappDisplay: "(62) 99999-9999",
+    whatsappNumber: "5562996045746",
+    whatsappDisplay: "(62) 99604-5746",
     instagramHandle: "atlamdoces",
     instagramUrl: "https://instagram.com/atlamdoces",
     hours: "Segunda a Sábado: 09h às 19h",

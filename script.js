@@ -17,29 +17,27 @@ document.addEventListener('DOMContentLoaded', () => {
 /* --------------------------------------------------------------------------
    1. Atualização Dinâmica de Links da Marca (WhatsApp, Instagram, etc)
    -------------------------------------------------------------------------- */
+function whatsappUrl(message) {
+  return `https://wa.me/${ATLAM_CONFIG.brand.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
 function initDynamicConfigLinks() {
   if (typeof ATLAM_CONFIG === 'undefined') return;
 
-  const phone = ATLAM_CONFIG.brand.whatsappNumber;
   const instagram = ATLAM_CONFIG.brand.instagramUrl;
   const location = ATLAM_CONFIG.brand.location;
 
-  // Botões genéricos de WhatsApp
-  document.querySelectorAll('.btn-whatsapp-general').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const defaultMsg = encodeURIComponent("Olá! Vim pelo site da Atlam Doces e gostaria de informações sobre os brownies e encomendas.");
-      window.open(`https://wa.me/${phone}?text=${defaultMsg}`, '_blank');
-    });
-  });
+  const messages = {
+    general: "Olá! Vim pelo site da Atlam Doces e gostaria de conhecer os brownies e fazer um pedido. Podem me ajudar?",
+    kit: "Olá! Vim pelo site da Atlam Doces e gostaria de montar um kit de presente personalizado. Quais são as opções disponíveis?",
+    eventos: "Olá! Vim pelo site da Atlam Doces e gostaria de fazer uma encomenda para uma festa ou evento. Podem informar as opções, o prazo e o orçamento?"
+  };
 
-  // Botões de Kits de Presentes
-  document.querySelectorAll('.btn-whatsapp-kit').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const kitMsg = encodeURIComponent("Olá! Vim pelo site da Atlam Doces e gostaria de montar um kit de presente personalizado.");
-      window.open(`https://wa.me/${phone}?text=${kitMsg}`, '_blank');
-    });
+  document.querySelectorAll('.btn-whatsapp-general, .btn-whatsapp-kit').forEach(link => {
+    const context = link.dataset.whatsappContext || (link.classList.contains('btn-whatsapp-kit') ? 'kit' : 'general');
+    link.href = whatsappUrl(messages[context] || messages.general);
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
   });
 
   // Links do Instagram
@@ -159,9 +157,10 @@ function initProducts() {
       // Evento Pedido Direto
       const directBtn = card.querySelector('.btn-order-single');
       directBtn.addEventListener('click', () => {
-        const phone = ATLAM_CONFIG.brand.whatsappNumber;
-        const msg = encodeURIComponent(`Olá! Vim pelo site da Atlam Doces e gostaria de pedir o ${prod.name}.`);
-        window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        const message = prod.category === 'eventos'
+          ? `Olá! Vim pelo site da Atlam Doces e gostaria de saber sobre ${prod.name}. Podem me passar as opções e um orçamento?`
+          : `Olá! Vim pelo site da Atlam Doces e gostaria de pedir ${prod.name} (${prod.priceDisplay}). Podem confirmar a disponibilidade e combinar entrega ou retirada?`;
+        window.open(whatsappUrl(message), '_blank', 'noopener,noreferrer');
       });
 
       // Evento Adicionar à Sacola
@@ -349,8 +348,7 @@ function sendOrderViaWhatsApp() {
 
   message += `\nComo podemos combinar a entrega e o pagamento?`;
 
-  const phone = ATLAM_CONFIG.brand.whatsappNumber;
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+  window.open(whatsappUrl(message), '_blank', 'noopener,noreferrer');
 }
 
 /* --------------------------------------------------------------------------
