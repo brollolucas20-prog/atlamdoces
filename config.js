@@ -27,10 +27,10 @@ const ATLAM_CONFIG = {
       name: "Brownie Tradicional",
       category: "tradicional",
       badge: "O Clássico",
-      price: 8.50,
-      priceDisplay: "R$ 8,50",
+      price: 7.00,
+      priceDisplay: "R$ 7,00",
       description: "Nossa receita assinatura: casquinha brilhante e craquelada, interior denso, macio e chocolatudo na medida perfeita.",
-      image: "Imagens/Captura de tela 2026-08-19 173733.png",
+      image: "Imagens/brownie-tradicional-novo.jpg",
       featured: true
     },
     {
